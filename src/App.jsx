@@ -75,7 +75,7 @@ function App() {
 
   async function saveUserData() {
     try {
-      const response=await fetch("http://localhost:4000/saveset",{
+      const response=await fetch("https://el-lotteria.vercel.app/saveset",{
         method:"POST",
         headers:{
             "Content-Type":"application/json",
@@ -95,7 +95,7 @@ function App() {
   async function handleDataChangesandVictory(a) {
     try {
 
-      const response=await fetch("http://localhost:4000/changeandcheck",{
+      const response=await fetch("https://el-lotteria.vercel.app/changeandcheck",{
         method:"PUT",
         headers:{
             "Content-Type":"application/json",

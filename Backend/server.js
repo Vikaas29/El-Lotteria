@@ -28,7 +28,11 @@ app.listen(4000,()=>{
     console.log("server is running at port 4000");
 });
 
-app.use(cors());
+app.use(cors({
+    origin:["https://event-management-system-eight-teal.vercel.app","http://localhost:5173"], 
+    credentials:true,       
+    optionSuccessStatus:200,
+ }));
 app.use(express.json());
 
 userRoutes(app);
