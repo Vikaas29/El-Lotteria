@@ -10,7 +10,7 @@ function App() {
   const[userOneFiller,setUserOneFiller]=useState(1);
   const[userTwoFiller,setUserTwoFiller]=useState(1);
   const[userNumber,setUserNumber]=useState(1);
-  const [lock,setLock]=useState(false);
+  const [lock,setLock]=useState(true);
 
   const [gameId,setGameId]=useState(null);
 
@@ -65,12 +65,7 @@ function App() {
     }
   }
   function handleReset(){
-    setIsGameOn(false);
-    setUserOne([0,0,0,0,0,0,0,0,0]);
-    setUserTwo([0,0,0,0,0,0,0,0,0]);
-    setUserOneFiller(1);
-    setUserTwoFiller(1);
-    setUserNumber(1);
+    window.location.reload(false);
   }
 
   async function saveUserData() {
@@ -87,6 +82,7 @@ function App() {
     });
     const result=await response.json()
     setGameId(result);
+    setLock(false);
     } catch (error) {
       console.log(error);
     }
@@ -138,7 +134,10 @@ function App() {
         {
           !isGameOn ? <div onClick={startGame} className='border border-black cursor-pointer  p-2 text-2xl font-bold rounded-2xl '>Start</div> : 
           <>
+          <div > 
           <button disabled={lock} onClick={()=>{handleRoll()}} className='border border-black cursor-pointer  p-2 text-2xl font-bold rounded-2xl '>{`User ${userNumber}: Roll`}</button>
+          {lock? <div>Wait...</div> : null}
+          </div>
         
            <div className='text-2xl '> Last Rolled :  {rolled}</div></>
         }
