@@ -2,10 +2,9 @@ import { useState } from "react"
 
 export function SingleCellTwo(props){
 
-    const {userTwo,setUserTwo,userOne,setUserOne,e,index,isGameOn,userOneFiller,setUserOneFiller,userTwoFiller,setUserTwoFiller,setIsGameOn}=props.data;
+    const {userTwo,setUserTwo,e,index,isGameOn,userTwoFiller,setUserTwoFiller}=props.data;
     
     const [flag,setFlag]=useState(true);
-    const [flagTwo,setFlagTwo]=useState(true);
     
     async function handleClick() {
       if(!isGameOn && flag){

@@ -1,24 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { SingleCell } from './components/SingleCell';
 import { SingleCellTwo } from './components/SingleCellTwo';
+import io from "socket.io-client"
 
 function App() {
- 
+  const [gameId,setGameId]=useState(null);
   const [userOne,setUserOne]=useState([0,0,0,0,0,0,0,0,0]);
   const [userTwo,setUserTwo]=useState([0,0,0,0,0,0,0,0,0]);
   const[userOneFiller,setUserOneFiller]=useState(1);
   const[userTwoFiller,setUserTwoFiller]=useState(1);
   const[userNumber,setUserNumber]=useState(1);
   const [lock,setLock]=useState(true);
-
-  const [gameId,setGameId]=useState(null);
-
   const [rolled,setRolled]=useState(null);
-
   const [isGameOn,setIsGameOn]=useState(false);
-
   const [turn, setTurn]=useState(true);
+
+  useEffect(() => {
+    connectToSocket();
+  }, [gameId]);
+  function connectToSocket(){
+    
+    if(gameId){
+      const newSocket= io("https://el-lotteria-backend.onrender.com");
+      
+      newSocket.on("connect",()=>{});
+
+      newSocket.on("disconnect",()=>{});
+
+      newSocket.emit("join_room",gameId);
+
+      newSocket.on("receive_message",(data)=>{setLock(true);alert(data);});
+    }
+  }
 
   function handleRoll() {
     if(isGameOn){
@@ -70,7 +84,7 @@ function App() {
 
   async function saveUserData() {
     try {
-      const response=await fetch("https://el-lotteria.vercel.app/saveset",{
+      const response=await fetch("https://el-lotteria-backend.onrender.com/saveset",{
         method:"POST",
         headers:{
             "Content-Type":"application/json",
@@ -81,7 +95,7 @@ function App() {
         })
     });
     const result=await response.json()
-    setGameId(result);
+    setGameId(result._id);
     setLock(false);
     } catch (error) {
       console.log(error);
@@ -91,7 +105,7 @@ function App() {
   async function handleDataChangesandVictory(a) {
     try {
 
-      const response=await fetch("https://el-lotteria.vercel.app/changeandcheck",{
+      const response=await fetch("https://el-lotteria-backend.onrender.com/changeandcheck",{
         method:"PUT",
         headers:{
             "Content-Type":"application/json",
@@ -122,10 +136,10 @@ function App() {
 
         <div className='flex flex-col gap-20'>
           <div className='w-[300px] h-[300px] flex flex-wrap'>
-            {userOne.map((e,index)=><SingleCell key={index} data={{userTwo,index,setUserTwo,userOne,setUserOne,e,isGameOn,userOneFiller,setUserOneFiller,userTwoFiller,setUserTwoFiller,setIsGameOn}}></SingleCell>)}
+            {userOne.map((e,index)=><SingleCell key={index} data={{userOne,setUserOne,e,index,isGameOn,userOneFiller,setUserOneFiller}}></SingleCell>)}
           </div>
           <div className='w-[300px] h-[300px] flex flex-wrap'>
-            {userTwo.map((e,index)=><SingleCellTwo key={index} data={{userTwo,setUserTwo,userOne,setUserOne,e,index,isGameOn,userOneFiller,setUserOneFiller,userTwoFiller,setUserTwoFiller,setIsGameOn}}></SingleCellTwo>)}
+            {userTwo.map((e,index)=><SingleCellTwo key={index} data={{userTwo,setUserTwo,e,index,isGameOn,userTwoFiller,setUserTwoFiller}}></SingleCellTwo>)}
           </div>
         </div>
 
@@ -150,4 +164,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

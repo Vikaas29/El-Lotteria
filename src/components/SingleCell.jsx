@@ -2,10 +2,9 @@ import { useState } from "react"
 
 export function SingleCell(props){
 
-    const {userOne,setUserOne,e,index,isGameOn,userOneFiller,setUserOneFiller,userTwoFiller,setUserTwoFiller,setIsGameOn}=props.data;
+    const {userOne,setUserOne,e,index,isGameOn,userOneFiller,setUserOneFiller}=props.data;
 
     const [flag,setFlag]=useState(true);
-    const [flagTwo,setFlagTwo]=useState(true);
     
     async function handleClick() {
       if(!isGameOn && flag){
@@ -23,20 +22,3 @@ export function SingleCell(props){
             </div>
         </>)
 }
-
-// if(!isGameOn && flag){
-//     setBlockData(userOneFiller);
-//     setUserOneFiller((e)=>e+1);
-//     setFlag(false);
-// }
-// if(isGameOn && flagTwo){
-
-//     const a=[...userOne];
-//     a[e]="X"
-//     setUserOne([...a]);
-//     setFlagTwo(false);
-//     setBlockData("X");
-// }
-// if(userOneFiller==10 && userTwoFiller==10){
-//     setIsGameOn(true);
-// }
