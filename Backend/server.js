@@ -84,7 +84,6 @@ changeEvent.on('change', async (change) => {
             }
             x=x+1
         }
-
         }
       } catch (err) {
         console.error("Error getting updated document:", err);
