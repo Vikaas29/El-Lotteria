@@ -29,7 +29,7 @@ app.listen(4000,()=>{
 });
 
 app.use(cors({
-    origin:["https://event-management-system-eight-teal.vercel.app","http://localhost:5173"], 
+    origin:["https://el-lotteriafrontend.vercel.app","http://localhost:5173"], 
     credentials:true,       
     optionSuccessStatus:200,
  }));
